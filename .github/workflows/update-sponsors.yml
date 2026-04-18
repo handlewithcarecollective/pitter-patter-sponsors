@@ -21,3 +21,7 @@ jobs:
       - name: Run update sponsor script
         working-directory: update-sponsors
         run: cargo run
+      - name: ls
+      - run: ls
+      - name: ls under
+      - run: ls pitter-patter-sponsors
