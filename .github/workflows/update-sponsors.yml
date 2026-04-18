@@ -1,0 +1,23 @@
+name: Pitter Patter Sponsors Update
+run-name: ${{ github.actor }} is updating Pitter Patter sponsors
+on: [push]
+  # pull_request:
+  #   types:
+  #     - closed
+  #   branches:
+  #     - main
+jobs:
+  update-sponsors:
+    # if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v6
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+      - name: Install Rust
+        run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+      - name: Run update sponsor script
+        working-directory: update-sponsors
+        run: cargo run
