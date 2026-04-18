@@ -23,5 +23,7 @@ jobs:
       #   run: cargo run
       - name: ls
         run: ls
-      - name: ls under
-        run: ls pitter-patter-sponsors
+      - name: ls logo
+        run: ls logos
+      - name: pwd
+        run: pwd
