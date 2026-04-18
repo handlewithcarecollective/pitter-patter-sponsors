@@ -27,3 +27,8 @@ jobs:
         run: ls logos
       - name: pwd
         run: pwd
+      - name: Check out repository code
+        uses: actions/checkout@v6
+        with:
+          repository: handlewithcarecollective/pitter-patter
+
