@@ -16,11 +16,11 @@ jobs:
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
-      - name: Install Rust
-        run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-      - name: Run update sponsor script
-        working-directory: update-sponsors
-        run: cargo run
+      # - name: Install Rust
+      #   run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+      # - name: Run update sponsor script
+      #   working-directory: update-sponsors
+      #   run: cargo run
       - name: ls
         run: ls
       - name: ls under
