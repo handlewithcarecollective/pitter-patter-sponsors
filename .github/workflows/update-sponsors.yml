@@ -22,6 +22,6 @@ jobs:
         working-directory: update-sponsors
         run: cargo run
       - name: ls
-      - run: ls
+        run: ls
       - name: ls under
-      - run: ls pitter-patter-sponsors
+        run: ls pitter-patter-sponsors
