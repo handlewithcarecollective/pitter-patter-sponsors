@@ -45,7 +45,8 @@ jobs:
         run: pwd
       - name: commit
         working-directory: pitter-patter
-        run: git commit -am "added sponsors"
-      - name: push
-        working-directory: pitter-patter
-        run: git push origin readme-sponsors
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "added sponsors"
+          git push origin readme-sponsors
