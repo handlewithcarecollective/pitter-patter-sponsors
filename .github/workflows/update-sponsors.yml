@@ -48,14 +48,24 @@ jobs:
       #   run: echo "$GITHUB_WORKSPACE"
       # - name: pwd
       #   run: pwd
-      # - name: git-config
-      #   working-directory: pitter-patter
-      #   run: |
-      #     git config --global user.name "github-actions[bot]"
-      #     git config --global user.email "github-actions[bot]@users.noreply.github.com"
-      # - name: commit
-      #   working-directory: pitter-patter
-      #   run: |
-      #     GIT_LFS_SKIP_SMUDGE=1 git clone https://pdiffley:$@github.com/handlewithcarecollective/pitter-patter
-      #     git commit -am "added sponsors"
-      #     git push origin readme-sponsors
+      - name: clone
+        env:
+          REPO_PAT: ${{ secrets.REPO_ACCESS_PAT }}
+        run: |
+          GIT_LFS_SKIP_SMUDGE=1 git clone https://pdiffley:$REPO_PAT@github.com/handlewithcarecollective/pitter-patter
+      - name: switch
+        working-directory: pitter-patter
+        run: git switch readme-sponsors
+      - name: Run update sponsor script
+        working-directory: update-sponsors
+        run: cargo run -- --logo_dir="$GITHUB_WORKSPACE/logos" --readme_path="$GITHUB_WORKSPACE/pitter-patter/README.md"
+      - name: git-config
+        working-directory: pitter-patter
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      - name: commit
+        working-directory: pitter-patter
+        run: |
+          git commit -am "added sponsors"
+          git push origin readme-sponsors
