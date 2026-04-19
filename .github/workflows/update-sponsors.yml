@@ -34,6 +34,8 @@ jobs:
           path: pitter-patter
       - name: ls
         run: ls
+      - name: ls
+        run: ls pitter-patter
       - name: pwd
         run: pwd
 
