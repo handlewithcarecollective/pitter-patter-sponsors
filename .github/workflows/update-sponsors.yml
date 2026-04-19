@@ -31,4 +31,8 @@ jobs:
         uses: actions/checkout@v6
         with:
           repository: handlewithcarecollective/pitter-patter
+      - name: ls
+        run: ls
+      - name: pwd
+        run: pwd
 
