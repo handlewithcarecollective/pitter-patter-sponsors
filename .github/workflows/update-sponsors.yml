@@ -28,35 +28,34 @@ jobs:
         with:
           token: ${{ secrets.TEST_SECRET }}
         run: echo $token
-      
-      - name: Check out repository code
-        uses: actions/checkout@v6
-        with:
-          repository: handlewithcarecollective/pitter-patter
-          path: pitter-patter
-          ref: readme-sponsors
-          token: ${{ secrets.TEST_SECRET }}
-      - name: Run update sponsor script
-        working-directory: update-sponsors
-        run: cargo run -- --logo_dir="$GITHUB_WORKSPACE/logos" --readme_path="$GITHUB_WORKSPACE/pitter-patter/README.md"
-      - name: cat
-        run: cat "$GITHUB_WORKSPACE/pitter-patter/README.md"
-      - name: ls
-        run: ls
-      - name: ls
-        run: ls pitter-patter
-      - name: echo
-        run: echo "$GITHUB_WORKSPACE"
-      - name: pwd
-        run: pwd
-      - name: git-config
-        working-directory: pitter-patter
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-      - name: commit
-        working-directory: pitter-patter
-        run: |
-          GIT_LFS_SKIP_SMUDGE=1 git clone https://pdiffley:$@github.com/handlewithcarecollective/pitter-patter
-          git commit -am "added sponsors"
-          git push origin readme-sponsors
+      # - name: Check out repository code
+      #   uses: actions/checkout@v6
+      #   with:
+      #     repository: handlewithcarecollective/pitter-patter
+      #     path: pitter-patter
+      #     ref: readme-sponsors
+      #     token: ${{ secrets.TEST_SECRET }}
+      # - name: Run update sponsor script
+      #   working-directory: update-sponsors
+      #   run: cargo run -- --logo_dir="$GITHUB_WORKSPACE/logos" --readme_path="$GITHUB_WORKSPACE/pitter-patter/README.md"
+      # - name: cat
+      #   run: cat "$GITHUB_WORKSPACE/pitter-patter/README.md"
+      # - name: ls
+      #   run: ls
+      # - name: ls
+      #   run: ls pitter-patter
+      # - name: echo
+      #   run: echo "$GITHUB_WORKSPACE"
+      # - name: pwd
+      #   run: pwd
+      # - name: git-config
+      #   working-directory: pitter-patter
+      #   run: |
+      #     git config --global user.name "github-actions[bot]"
+      #     git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      # - name: commit
+      #   working-directory: pitter-patter
+      #   run: |
+      #     GIT_LFS_SKIP_SMUDGE=1 git clone https://pdiffley:$@github.com/handlewithcarecollective/pitter-patter
+      #     git commit -am "added sponsors"
+      #     git push origin readme-sponsors
