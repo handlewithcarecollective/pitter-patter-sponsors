@@ -13,41 +13,6 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v6
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
-      # - name: Install Rust
-      #   run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-      - name: ls
-        run: ls
-      - name: ls logo
-        run: ls logos
-      - name: pwd
-        run: pwd
-      - name: echo
-        env:
-          TOKEN: ${{ secrets.TEST_SECRET }}
-        run: echo $TOKEN
-      # - name: Check out repository code
-      #   uses: actions/checkout@v6
-      #   with:
-      #     repository: handlewithcarecollective/pitter-patter
-      #     path: pitter-patter
-      #     ref: readme-sponsors
-      #     token: ${{ secrets.TEST_SECRET }}
-      # - name: Run update sponsor script
-      #   working-directory: update-sponsors
-      #   run: cargo run -- --logo_dir="$GITHUB_WORKSPACE/logos" --readme_path="$GITHUB_WORKSPACE/pitter-patter/README.md"
-      # - name: cat
-      #   run: cat "$GITHUB_WORKSPACE/pitter-patter/README.md"
-      # - name: ls
-      #   run: ls
-      # - name: ls
-      #   run: ls pitter-patter
-      # - name: echo
-      #   run: echo "$GITHUB_WORKSPACE"
-      - name: pwd
-        run: pwd
       - name: clone
         env:
           REPO_PAT: ${{ secrets.REPO_ACCESS_PAT }}
@@ -55,7 +20,8 @@ jobs:
           GIT_LFS_SKIP_SMUDGE=1 git clone https://pdiffley:$REPO_PAT@github.com/handlewithcarecollective/pitter-patter
       - name: switch
         working-directory: pitter-patter
-        run: git switch readme-sponsors
+        run: |
+          git switch readme-sponsors
       - name: Run update sponsor script
         working-directory: update-sponsors
         run: cargo run -- --logo_block_path="$GITHUB_WORKSPACE/logo-block.md" --readme_path="$GITHUB_WORKSPACE/pitter-patter/README.md"
