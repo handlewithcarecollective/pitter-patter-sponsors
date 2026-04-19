@@ -29,6 +29,7 @@ jobs:
         with:
           repository: handlewithcarecollective/pitter-patter
           path: pitter-patter
+          ref: readme-sponsors
       - name: Run update sponsor script
         working-directory: update-sponsors
         run: cargo run -- --logo_dir="$GITHUB_WORKSPACE/logos" --readme_path="$GITHUB_WORKSPACE/pitter-patter/README.md"
