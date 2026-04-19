@@ -25,9 +25,9 @@ jobs:
       - name: pwd
         run: pwd
       - name: echo
-        with:
-          token: ${{ secrets.TEST_SECRET }}
-        run: echo $token
+        env:
+          TOKEN: ${{ secrets.TEST_SECRET }}
+        run: echo $TOKEN
       # - name: Check out repository code
       #   uses: actions/checkout@v6
       #   with:
