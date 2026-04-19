@@ -58,7 +58,7 @@ jobs:
         run: git switch readme-sponsors
       - name: Run update sponsor script
         working-directory: update-sponsors
-        run: cargo run -- --logo_dir="$GITHUB_WORKSPACE/logos" --readme_path="$GITHUB_WORKSPACE/pitter-patter/README.md"
+        run: cargo run -- --logo_block_path="$GITHUB_WORKSPACE/logo-block.md" --readme_path="$GITHUB_WORKSPACE/pitter-patter/README.md"
       - name: git-config
         working-directory: pitter-patter
         run: |

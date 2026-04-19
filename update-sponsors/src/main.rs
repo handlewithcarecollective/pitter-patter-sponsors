@@ -12,8 +12,8 @@ const LOGO_BLOCK_CLOSE: &'static str = "<!-- Close Sponsor Block 25dfc72f-3e1c-4
 
 #[derive(Parser, Clone, Debug)]
 pub struct Config {
-  #[arg(long = "logo_dir")]
-  pub logo_dir: PathBuf,
+  #[arg(long = "logo_block_path")]
+  pub logo_block_path: PathBuf,
   #[arg(long = "readme_path")]
   pub readme_path: PathBuf,
 }
@@ -21,17 +21,14 @@ pub struct Config {
 fn main() {
   let config = Config::parse();
 
-  // read logo files
-  let logo_file_names = get_logo_file_names(&config.logo_dir);
-
   // create logo block
-  let logo_block = generate_logo_block(&logo_file_names);
+  let logo_block = read_to_string(&config.logo_block_path).unwrap();
 
   // load readme as a vec of lines
-  let readme_lines = load_readme(&config.readme_path);
+  let readme = read_to_string(&config.readme_path).unwrap();
 
   // update readme with new logo block
-  let updated_readme_lines = update_readme_logo_block(&readme_lines, &logo_block);
+  let updated_readme_lines = update_readme_logo_block(&readme, &logo_block);
 
   // save readme
   save_readme(&config.readme_path, &updated_readme_lines);
