@@ -13,11 +13,25 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v6
-      - name: List files in the repository
+      - name: clone
+        env:
+          REPO_PAT: ${{ secrets.REPO_ACCESS_PAT }}
         run: |
-          ls ${{ github.workspace }}
-      - name: Install Rust
-        run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+          GIT_LFS_SKIP_SMUDGE=1 git clone https://pdiffley:$REPO_PAT@github.com/handlewithcarecollective/pitter-patter
+      - name: switch
+        working-directory: pitter-patter
+        run: |
+          git switch readme-sponsors
       - name: Run update sponsor script
         working-directory: update-sponsors
-        run: cargo run
+        run: cargo run -- --logo_block_path="$GITHUB_WORKSPACE/logo-block.md" --readme_path="$GITHUB_WORKSPACE/pitter-patter/README.md"
+      - name: git-config
+        working-directory: pitter-patter
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      - name: commit
+        working-directory: pitter-patter
+        run: |
+          git commit -am "added sponsors" --allow-empty
+          git push origin readme-sponsors

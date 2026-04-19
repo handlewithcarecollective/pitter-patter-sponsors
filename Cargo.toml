@@ -1,0 +1,4 @@
+[workspace]
+
+members = ["update-sponsors"]
+resolver = "2"
