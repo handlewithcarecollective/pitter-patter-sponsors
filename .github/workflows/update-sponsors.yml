@@ -43,4 +43,9 @@ jobs:
         run: echo "$GITHUB_WORKSPACE"
       - name: pwd
         run: pwd
-
+      - name: commit
+        working-directory: pitter-patter
+        run: git commit -am "added sponsors"
+      - name: push
+        working-directory: pitter-patter
+        run: git push origin readme-sponsors
