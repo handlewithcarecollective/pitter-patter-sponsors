@@ -1,6 +1,7 @@
 use std::{fs::{self, read_dir}, path::{Path, PathBuf}};
 
 use clap::Parser;
+use regex::Regex;
 use std::fs::read_to_string;
 
 const LOGO_URL_BASE: &'static str = "https://media.githubusercontent.com/media/handlewithcarecollective/pitter-patter-sponsors/main/logos/";
@@ -42,62 +43,31 @@ fn get_logo_file_names(logo_dir: &Path) -> Vec<String> {
   .collect::<Vec<_>>()
 }
 
-fn generate_logo_block(logo_file_names: &[String]) -> Vec<String> {
+fn generate_logo_block(logo_file_names: &[String]) -> String {
   logo_file_names.iter()
   .map(|file_name| format!("![file_name]({LOGO_URL_BASE}{file_name})"))
   .collect::<Vec<_>>()
+  .join("\n")
 }
 
-fn load_readme(readme_path: &Path) -> Vec<String> {
-  let mut result = Vec::new();
-  for line in read_to_string(readme_path).unwrap().lines() {
-    result.push(line.to_string())
-  }
-  result
+fn load_readme(readme_path: &Path) -> String {
+  read_to_string(readme_path).unwrap()
 }
 
-fn save_readme(readme_path: &Path, readme_lines: &[String]) {
-  let readme_str = readme_lines.join("\n");
+fn save_readme(readme_path: &Path, readme_str: &str) {
   fs::write(readme_path, readme_str).unwrap();
 }
 
-fn update_readme_logo_block(readme_lines: &[String], logo_block: &[String]) -> Vec<String> {
-  let mut updated_readme = vec![];
-  let mut line_iter = readme_lines.iter().peekable();
-  
-  let mut open_block_found = false;
-  let mut close_block_found = false;
-  while let Some(next_line) = line_iter.next() {
-    updated_readme.push(next_line.to_string());
-    if next_line == LOGO_BLOCK_OPEN {
-      open_block_found = true;
-      break;
-    }
+fn update_readme_logo_block(readme_lines: &str, logo_block: &str) -> String {
+  let re = Regex::new(&format!(r"(?s){}.*{}", regex::escape(LOGO_BLOCK_OPEN), regex::escape(LOGO_BLOCK_CLOSE))).unwrap();
+  let full_logo_block = format!("{LOGO_BLOCK_OPEN}\n{logo_block}\n{LOGO_BLOCK_CLOSE}");
+
+  if !re.is_match(readme_lines) {
+    panic!("Did not find logo block in readme.");
   }
 
-  for next_line in logo_block.iter() {
-    updated_readme.push(next_line.to_string());
-  }
-
-  while let Some(next_line) = line_iter.peek() {
-    if *next_line == LOGO_BLOCK_CLOSE {
-      close_block_found = true;
-      break;
-    }
-    line_iter.next();
-  }
-
-  for next_line in line_iter {
-    updated_readme.push(next_line.to_string());
-  }
-
-  if !open_block_found {
-    panic!("Did not find logo block open in readme. Line must exactly match \"{LOGO_BLOCK_OPEN}\"");
-  }
-
-  if !close_block_found {
-    panic!("Did not find logo block close in readme. Line must exactly match \"{LOGO_BLOCK_CLOSE}\"");
-  }
+  let updated_readme = re.replace(readme_lines, full_logo_block);
+  let updated_readme = String::from(updated_readme);
   
   updated_readme
 }
