@@ -29,10 +29,11 @@ jobs:
         with:
           repository: handlewithcarecollective/pitter-patter
           path: pitter-patter
-      # - name: Run update sponsor script
-      #   working-directory: update-sponsors
-      #   run: cargo run -- --logo_dir=""
-
+      - name: Run update sponsor script
+        working-directory: update-sponsors
+        run: cargo run -- --logo_dir="$GITHUB_WORKSPACE/logos" --readme_path="$GITHUB_WORKSPACE/pitter-patter/README.md"
+      - name: cat
+        run: cat "$GITHUB_WORKSPACE/pitter-patter/README.md"
       - name: ls
         run: ls
       - name: ls
