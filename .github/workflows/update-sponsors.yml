@@ -18,9 +18,6 @@ jobs:
           ls ${{ github.workspace }}
       # - name: Install Rust
       #   run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-      # - name: Run update sponsor script
-      #   working-directory: update-sponsors
-      #   run: cargo run
       - name: ls
         run: ls
       - name: ls logo
@@ -32,10 +29,16 @@ jobs:
         with:
           repository: handlewithcarecollective/pitter-patter
           path: pitter-patter
+      # - name: Run update sponsor script
+      #   working-directory: update-sponsors
+      #   run: cargo run -- --logo_dir=""
+
       - name: ls
         run: ls
       - name: ls
         run: ls pitter-patter
+      - name: echo
+        run: echo "$GITHUB_WORKSPACE"
       - name: pwd
         run: pwd
 
