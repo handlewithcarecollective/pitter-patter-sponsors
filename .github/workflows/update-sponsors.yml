@@ -43,10 +43,13 @@ jobs:
         run: echo "$GITHUB_WORKSPACE"
       - name: pwd
         run: pwd
+      - name: git-config
+        working-directory: pitter-patter
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
       - name: commit
         working-directory: pitter-patter
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git commit -m "added sponsors"
+          git commit -am "added sponsors"
           git push origin readme-sponsors
