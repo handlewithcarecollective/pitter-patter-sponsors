@@ -30,8 +30,8 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-      # - name: commit
-      #   working-directory: pitter-patter
-      #   run: |
-      #     git commit -am "added sponsors"
-      #     git push origin readme-sponsors
+      - name: commit
+        working-directory: pitter-patter
+        run: |
+          git commit -am "added sponsors" --allow-empty
+          git push origin readme-sponsors
