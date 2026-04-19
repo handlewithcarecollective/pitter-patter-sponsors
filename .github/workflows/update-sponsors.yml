@@ -46,8 +46,8 @@ jobs:
       #   run: ls pitter-patter
       # - name: echo
       #   run: echo "$GITHUB_WORKSPACE"
-      # - name: pwd
-      #   run: pwd
+      - name: pwd
+        run: pwd
       - name: clone
         env:
           REPO_PAT: ${{ secrets.REPO_ACCESS_PAT }}
