@@ -1,19 +1,28 @@
 name: Pitter Patter Sponsors Update
 run-name: ${{ github.actor }} is updating Pitter Patter sponsors
-on: [push]
-# on:
-#   pull_request:
-#     types:
-#       - closed
-#     branches:
-#       - main
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+# on: [push]
 jobs:
   update-sponsors:
-    # if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
         uses: actions/checkout@v6
+      - name: Run update sponsor script
+        working-directory: update-sponsors
+        run: cargo run -- --logo_block_path="$GITHUB_WORKSPACE/logo-block.md" --readme_path="$GITHUB_WORKSPACE/README.md"
+      - name: commit
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -am "updated sponsors" --allow-empty
+          git push origin main
       - name: clone
         env:
           REPO_PAT: ${{ secrets.REPO_ACCESS_PAT }}
@@ -27,5 +36,5 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git commit -am "added sponsors" --allow-empty
+          git commit -am "updated sponsors" --allow-empty
           git push origin main
