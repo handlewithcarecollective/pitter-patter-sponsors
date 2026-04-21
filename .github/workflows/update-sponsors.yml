@@ -18,21 +18,14 @@ jobs:
         env:
           REPO_PAT: ${{ secrets.REPO_ACCESS_PAT }}
         run: |
-          git clone https://pdiffley:$REPO_PAT@github.com/handlewithcarecollective/pitter-patter
-      - name: switch
-        working-directory: pitter-patter
-        run: |
-          git switch readme-sponsors
+          GIT_LFS_SKIP_SMUDGE=1 git clone https://pdiffley:$REPO_PAT@github.com/handlewithcarecollective/pitter-patter
       - name: Run update sponsor script
         working-directory: update-sponsors
         run: cargo run -- --logo_block_path="$GITHUB_WORKSPACE/logo-block.md" --readme_path="$GITHUB_WORKSPACE/pitter-patter/README.md"
-      - name: git-config
+      - name: commit
         working-directory: pitter-patter
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-      - name: commit
-        working-directory: pitter-patter
-        run: |
           git commit -am "added sponsors" --allow-empty
-          git push origin readme-sponsors
+          git push origin main
