@@ -1,11 +1,12 @@
 name: Pitter Patter Sponsors Update
 run-name: ${{ github.actor }} is updating Pitter Patter sponsors
 on: [push]
-  # pull_request:
-  #   types:
-  #     - closed
-  #   branches:
-  #     - main
+# on:
+#   pull_request:
+#     types:
+#       - closed
+#     branches:
+#       - main
 jobs:
   update-sponsors:
     # if: github.event.pull_request.merged == true
@@ -17,7 +18,7 @@ jobs:
         env:
           REPO_PAT: ${{ secrets.REPO_ACCESS_PAT }}
         run: |
-          GIT_LFS_SKIP_SMUDGE=1 git clone https://pdiffley:$REPO_PAT@github.com/handlewithcarecollective/pitter-patter
+          git clone https://pdiffley:$REPO_PAT@github.com/handlewithcarecollective/pitter-patter
       - name: switch
         working-directory: pitter-patter
         run: |
