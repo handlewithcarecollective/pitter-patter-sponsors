@@ -9,11 +9,14 @@ on:
 # on: [push]
 jobs:
   update-sponsors:
+    # comment out to run action on push
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
         uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.REPO_ACCESS_PAT }}
       - name: Run update sponsor script
         working-directory: update-sponsors
         run: cargo run -- --logo_block_path="$GITHUB_WORKSPACE/logo-block.md" --readme_path="$GITHUB_WORKSPACE/README.md"
