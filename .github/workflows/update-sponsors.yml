@@ -1,25 +1,31 @@
 name: Pitter Patter Sponsors Update
 run-name: ${{ github.actor }} is updating Pitter Patter sponsors
 on:
-  pull_request:
-    types:
-      - closed
+  push:
     branches:
       - main
-# on: [push]
+
 jobs:
   update-sponsors:
-    # comment out to run action on push
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
         uses: actions/checkout@v6
         with:
           token: ${{ secrets.REPO_ACCESS_PAT }}
+
       - name: Run update sponsor script pitter-patter-sponsors
         working-directory: update-sponsors
-        run: cargo run -- --logo_block_path="$GITHUB_WORKSPACE/logo-block.md" --readme_path="$GITHUB_WORKSPACE/README.md"
+        run:
+          cargo run -- --logo_block_path="$GITHUB_WORKSPACE/logo-block.md"
+          --readme_path="$GITHUB_WORKSPACE/README.md"
+
+      - name: Install node.js and npm
+        uses: actions/setup-node@v6
+
+      - name: Format markdown
+        run: npx prettier --write logo-block.md README.md
+
       - name: Commit pitter-patter-sponsors
         run: |
           git config --global user.name "github-actions[bot]"
@@ -34,7 +40,9 @@ jobs:
           GIT_LFS_SKIP_SMUDGE=1 git clone https://pdiffley:$REPO_PAT@github.com/handlewithcarecollective/pitter-patter
       - name: Run update sponsor script for pitter-patter
         working-directory: update-sponsors
-        run: cargo run -- --logo_block_path="$GITHUB_WORKSPACE/logo-block.md" --readme_path="$GITHUB_WORKSPACE/pitter-patter/README.md"
+        run:
+          cargo run -- --logo_block_path="$GITHUB_WORKSPACE/logo-block.md"
+          --readme_path="$GITHUB_WORKSPACE/pitter-patter/README.md"
       - name: Commit pitter-patter
         working-directory: pitter-patter
         run: |
@@ -50,7 +58,9 @@ jobs:
           GIT_LFS_SKIP_SMUDGE=1 git clone https://pdiffley:$REPO_PAT@github.com/handlewithcarecollective/react-prosemirror
       - name: Run update sponsor script for react-prosemirror
         working-directory: update-sponsors
-        run: cargo run -- --logo_block_path="$GITHUB_WORKSPACE/logo-block.md" --readme_path="$GITHUB_WORKSPACE/react-prosemirror/README.md"
+        run:
+          cargo run -- --logo_block_path="$GITHUB_WORKSPACE/logo-block.md"
+          --readme_path="$GITHUB_WORKSPACE/react-prosemirror/README.md"
       - name: Commit react-prosemirror
         working-directory: react-prosemirror
         run: |
@@ -66,7 +76,9 @@ jobs:
           GIT_LFS_SKIP_SMUDGE=1 git clone https://pdiffley:$REPO_PAT@github.com/handlewithcarecollective/prosemirror-json
       - name: Run update sponsor script for prosemirror-json
         working-directory: update-sponsors
-        run: cargo run -- --logo_block_path="$GITHUB_WORKSPACE/logo-block.md" --readme_path="$GITHUB_WORKSPACE/prosemirror-json/README.md"
+        run:
+          cargo run -- --logo_block_path="$GITHUB_WORKSPACE/logo-block.md"
+          --readme_path="$GITHUB_WORKSPACE/prosemirror-json/README.md"
       - name: Commit prosemirror-json
         working-directory: prosemirror-json
         run: |
@@ -82,7 +94,9 @@ jobs:
           GIT_LFS_SKIP_SMUDGE=1 git clone https://pdiffley:$REPO_PAT@github.com/handlewithcarecollective/prosemirror-inputrules
       - name: Run update sponsor script for prosemirror-inputrules
         working-directory: update-sponsors
-        run: cargo run -- --logo_block_path="$GITHUB_WORKSPACE/logo-block.md" --readme_path="$GITHUB_WORKSPACE/prosemirror-inputrules/README.md"
+        run:
+          cargo run -- --logo_block_path="$GITHUB_WORKSPACE/logo-block.md"
+          --readme_path="$GITHUB_WORKSPACE/prosemirror-inputrules/README.md"
       - name: Commit prosemirror-inputrules
         working-directory: prosemirror-inputrules
         run: |
@@ -98,7 +112,9 @@ jobs:
           GIT_LFS_SKIP_SMUDGE=1 git clone https://pdiffley:$REPO_PAT@github.com/handlewithcarecollective/prosemirror-suggest-changes
       - name: Run update sponsor script for prosemirror-suggest-changes
         working-directory: update-sponsors
-        run: cargo run -- --logo_block_path="$GITHUB_WORKSPACE/logo-block.md" --readme_path="$GITHUB_WORKSPACE/prosemirror-suggest-changes/README.md"
+        run:
+          cargo run -- --logo_block_path="$GITHUB_WORKSPACE/logo-block.md"
+          --readme_path="$GITHUB_WORKSPACE/prosemirror-suggest-changes/README.md"
       - name: Commit prosemirror-suggest-changes
         working-directory: prosemirror-suggest-changes
         run: |
@@ -114,7 +130,9 @@ jobs:
           GIT_LFS_SKIP_SMUDGE=1 git clone https://pdiffley:$REPO_PAT@github.com/handlewithcarecollective/react-codemirror
       - name: Run update sponsor script for react-codemirror
         working-directory: update-sponsors
-        run: cargo run -- --logo_block_path="$GITHUB_WORKSPACE/logo-block.md" --readme_path="$GITHUB_WORKSPACE/react-codemirror/README.md"
+        run:
+          cargo run -- --logo_block_path="$GITHUB_WORKSPACE/logo-block.md"
+          --readme_path="$GITHUB_WORKSPACE/react-codemirror/README.md"
       - name: Commit react-codemirror
         working-directory: react-codemirror
         run: |
@@ -130,7 +148,9 @@ jobs:
           GIT_LFS_SKIP_SMUDGE=1 git clone https://pdiffley:$REPO_PAT@github.com/handlewithcarecollective/remark-prosemirror
       - name: Run update sponsor script for remark-prosemirror
         working-directory: update-sponsors
-        run: cargo run -- --logo_block_path="$GITHUB_WORKSPACE/logo-block.md" --readme_path="$GITHUB_WORKSPACE/remark-prosemirror/README.md"
+        run:
+          cargo run -- --logo_block_path="$GITHUB_WORKSPACE/logo-block.md"
+          --readme_path="$GITHUB_WORKSPACE/remark-prosemirror/README.md"
       - name: Commit remark-prosemirror
         working-directory: remark-prosemirror
         run: |
