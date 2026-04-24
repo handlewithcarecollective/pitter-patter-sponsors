@@ -1,12 +1,16 @@
 name: Pitter Patter Sponsors Update
 run-name: ${{ github.actor }} is updating Pitter Patter sponsors
 on:
-  push:
+  pull_request:
+    types:
+      - closed
     branches:
       - main
 
 jobs:
   update-sponsors:
+    # comment out to run action on push
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
