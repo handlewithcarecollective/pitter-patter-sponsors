@@ -33,7 +33,7 @@ fn main() {
 
 fn update_readme_logo_block(readme_lines: &str, logo_block: &str) -> String {
   let re = Regex::new(&format!(r"(?s){}.*{}", regex::escape(LOGO_BLOCK_OPEN), regex::escape(LOGO_BLOCK_CLOSE))).unwrap();
-  let full_logo_block = format!("{LOGO_BLOCK_OPEN}\n{logo_block}\n{LOGO_BLOCK_CLOSE}");
+  let full_logo_block = format!("{LOGO_BLOCK_OPEN}\n\n{logo_block}\n{LOGO_BLOCK_CLOSE}");
 
   if !re.is_match(readme_lines) {
     panic!("Did not find logo block in readme.");
@@ -41,6 +41,6 @@ fn update_readme_logo_block(readme_lines: &str, logo_block: &str) -> String {
 
   let updated_readme = re.replace(readme_lines, full_logo_block);
   let updated_readme = String::from(updated_readme);
-  
+
   updated_readme
 }
